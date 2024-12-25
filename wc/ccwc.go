@@ -2,25 +2,19 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"log"
 	"os"
 	"strings"
 )
 
-func c() int {
-	fileName := flag.String("c", "test.txt", "File name parameter")
+func c(fileName string) int {
 	length := 0
-	flag.Parse()
-	file, err := os.Open(*fileName)
-	if err != nil {
-		log.Fatal(err)
-	}
-	// Create a reader
+	file, err := os.Open(fileName)
+	if err != nil {log.Fatal(err)}
+
 	reader := bufio.NewReader(file)
 
-	// Count the number of bytes
 	for {
 		_, err := reader.ReadByte()
 		if err != nil {
@@ -31,11 +25,9 @@ func c() int {
 	return length
 }
 
-func l() int {
-	fileName := flag.String("l", "test.txt", "File name parameter")
+func l(fileName string) int {
 	length := 0
-	flag.Parse()
-	file, err := os.Open(*fileName)
+	file, err := os.Open(fileName)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,11 +38,9 @@ func l() int {
 	return length
 }
 
-func w() int {
-	fileName := flag.String("w", "test.txt", "File name parameter")
+func w(fileName string) int {
 	length := 0
-	flag.Parse()
-	file, err := os.Open(*fileName)
+	file, err := os.Open(fileName)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -65,18 +55,16 @@ func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Parameters are needed")
 	}
-	fileName := new(string)
-	*fileName = "test.txt"
 	if os.Args[1] == "-c" {
-		fmt.Printf("%d %s\n", c(), *fileName)
+		fmt.Printf("%d %s\n", c(os.Args[2]), os.Args[2])
 		
 	} else if os.Args[1] == "-l" {
-		fmt.Printf("%d %s\n", l(), *fileName)
+		fmt.Printf("%d %s\n", l(os.Args[2]), os.Args[2])
 		
 	} else if os.Args[1] == "-w" {
-		fmt.Printf("%d %s\n", w(), *fileName)
+		fmt.Printf("%d %s\n", w(os.Args[2]), os.Args[2])
 		
 	} else {
-		fmt.Printf("%d %d %d %s\n", l(), w(), c(), *fileName)
+		fmt.Printf("%d %d %d %s\n", l(os.Args[1]), w(os.Args[1]), c(os.Args[1]), os.Args[1])
 	}
 }
